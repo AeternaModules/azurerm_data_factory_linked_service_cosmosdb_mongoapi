@@ -25,7 +25,7 @@ EOT
     description                    = optional(string)
     integration_runtime_name       = optional(string)
     parameters                     = optional(map(string))
-    server_version_is_32_or_higher = optional(bool, false)
+    server_version_is_32_or_higher = optional(bool) # Default: false
   }))
 }
 
