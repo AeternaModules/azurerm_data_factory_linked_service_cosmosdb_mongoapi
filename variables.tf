@@ -27,5 +27,47 @@ EOT
     parameters                     = optional(map(string))
     server_version_is_32_or_higher = optional(bool) # Default: false
   }))
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_cosmosdb_mongoapis : (
+        v.connection_string == null || (length(v.connection_string) > 0)
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_cosmosdb_mongoapis : (
+        v.database == null || (length(v.database) > 0)
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_cosmosdb_mongoapis : (
+        v.description == null || (length(v.description) > 0)
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  validation {
+    condition = alltrue([
+      for k, v in var.data_factory_linked_service_cosmosdb_mongoapis : (
+        v.integration_runtime_name == null || (length(v.integration_runtime_name) > 0)
+      )
+    ])
+    error_message = "must not be empty"
+  }
+  # --- Unconfirmed validation candidates, derived from azurerm_data_factory_linked_service_cosmosdb_mongoapi's provider source ---
+  # Not auto-enabled: either a bespoke provider validator we can't safely translate,
+  # or a path that crosses a list-typed block (needs its own for_each wrapping).
+  # Review, translate into a real validation{} block above, and delete once confirmed.
+  # path: name
+  #   source:    [from validate.LinkedServiceDatasetName] regexp.MustCompile(`^[-.+?/<>*%&:\\]+$`).MatchString(value)
+  # path: data_factory_id
+  #   source:    [from factories.ValidateFactoryID] !ok
+  # path: data_factory_id
+  #   source:    [from factories.ValidateFactoryID] err != nil
 }
 
